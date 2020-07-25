@@ -1,18 +1,18 @@
 pipeline{
     tools{
-        jdk 'myjava'
-        maven 'mymaven'
+        jdk 'my_java'
+        maven 'my_maven'
     }
     agent none
         stages{
-             stage('Compile'){
+             stage('compileJob'){
                 agent any
                 steps{
                     sh 'mvn compile'
                 }
                 
             }
-            stage('CodeReview'){
+            stage('codeReview'){
                 agent any
                 steps{
                     sh 'mvn pmd:pmd'
@@ -23,7 +23,7 @@ pipeline{
                     }
                 }
             }
-            stage('UnitTest'){
+            stage('unitTest'){
                 agent {label 'win_slave'}
                 steps{
                     git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
@@ -31,7 +31,7 @@ pipeline{
                 }
                 
             }
-            stage('MetriCheck'){
+            stage('metriCheck'){
                 agent any
                 steps{
                     sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
@@ -42,7 +42,7 @@ pipeline{
                     }
                 }
             }
-            stage('Package'){
+            stage('package'){
                 agent any
                 steps{
                     sh 'mvn package'
